@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   rabbitmq:
-    image: rabbitmq:latest
+    image: rabbitmq:management
     container_name: rabbitmq
     ports:
       - "5672:5672" # AMQP
@@ -24,6 +24,7 @@ services:
       - ./ruby-server:/app
     ports:
       - "3000:3000"
+      - "50051:50051"
 
   node-server:
     build:

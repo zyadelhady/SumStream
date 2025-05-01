@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+gem "json"
+
 gem "sinatra"
 # for live reload
 gem "rerun"
@@ -7,3 +9,9 @@ gem "rerun"
 gem "rackup"
 
 gem "puma"
+
+gem "grpc"
+
+gem "grpc-tools"
+
+gem "bunny"
