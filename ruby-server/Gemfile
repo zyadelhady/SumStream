@@ -15,3 +15,11 @@ gem "grpc"
 gem "grpc-tools"
 
 gem "bunny"
+
+gem "activerecord"
+
+gem "pg"
+
+gem "sinatra-activerecord"
+
+gem "rake"
