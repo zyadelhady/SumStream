@@ -23,3 +23,7 @@ gem "pg"
 gem "sinatra-activerecord"
 
 gem "rake"
+
+gem "prometheus-client"
+
+gem "fluent-plugin-grafana-loki"

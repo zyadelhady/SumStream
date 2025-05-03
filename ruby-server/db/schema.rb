@@ -16,7 +16,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_191743) do
 
   create_table "outbox", force: :cascade do |t|
     t.integer "msg", null: false
-    t.datetime "published_at"
+    t.datetime "started_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -2,10 +2,11 @@ import express from "express";
 import { startConsumer } from "./consumer";
 import { getCurrentSum, initSumFile } from "./update-sum";
 import client from "./prometheus";
+import { metricMiddleWare } from "./metric-middleware";
 
 const app = express();
+app.use(metricMiddleWare)
 const port = 4000;
-
 
 app.get("/sum", async (_, res) => {
   try {

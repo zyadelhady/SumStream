@@ -1,27 +1,39 @@
 import client from "prom-client";
 
-const messageCounter = new client.Counter({
+export const messageCounter = new client.Counter({
   name: "processed_messages_total",
   help: "Total number of processed messages",
 });
 
-const requestCount = new client.Counter({
+export const errormessageCounter = new client.Counter({
+  name: "error_messages_total",
+  help: "Total number of unprocessed messages that produced errors",
+});
+
+export const requestCount = new client.Counter({
   name: "http_requests_total",
   help: "Total number of HTTP requests",
   labelNames: ["method", "url", "status"],
 });
 
-const latencyHistogram = new client.Histogram({
+export const requestduration = new client.Histogram({
   name: "http_request_duration_ms",
   help: "Duration of HTTP requests in ms",
-  labelNames: ["method", "url"],
-  buckets: [50, 100, 300, 500, 1000, 2000], // in milliseconds
+  labelNames: ["method", "path"],
+  buckets: [1, 50, 100, 200, 400, 500, 800],
+});
+
+export const queueduration = new client.Histogram({
+  name: "queue_request_duration",
+  help: "Duration of The request From the start till the end",
+  buckets: [1, 50, 100, 200, 400, 500, 800],
 });
 
 client.collectDefaultMetrics();
 client.register.registerMetric(messageCounter);
+client.register.registerMetric(errormessageCounter);
 client.register.registerMetric(requestCount);
-client.register.registerMetric(latencyHistogram);
-
+client.register.registerMetric(requestduration);
+client.register.registerMetric(queueduration);
 
 export default client;

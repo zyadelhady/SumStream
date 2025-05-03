@@ -7,8 +7,8 @@ class OutBox < ActiveRecord::Base
   validates :msg, presence: true, numericality: {only_integer: true}
 
   # Add a new row to the outbox
-  def self.add(msg)
-    create!(msg: msg)
+  def self.add(msg, started_at)
+    create!(msg: msg,started_at:started_at)
   end
 
   # Get all rows from the outbox

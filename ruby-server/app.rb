@@ -6,11 +6,26 @@ require "json"
 require "bunny"
 require "grpc"
 require "sinatra/activerecord"
+require "prometheus/client"
+require "prometheus/client/push"
+require "prometheus/middleware/exporter"
+require "prometheus/middleware/collector"
 
 require_relative "addition_pb"
 require_relative "addition_services_pb"
 require_relative "outbox"
 
+# === Prometheus Setup ===
+PROM_REGISTRY = Prometheus::Client.registry
+
+REQUEST_DURATION = Prometheus::Client::Histogram.new(
+  :grpc_request_duration_ms,
+  docstring: "Duration of gRPC requests in ms",
+  labels: [:method, :path],
+  buckets: [1, 50, 100, 200, 400, 500, 800]
+)
+
+PROM_REGISTRY.register(REQUEST_DURATION)
 # === RabbitMQ Connection ===
 RABBIT_CONN = Bunny.new(hostname: "rabbitmq", username: "guest", password: "guest")
 RABBIT_CONN.start
@@ -22,10 +37,13 @@ RABBIT_QUEUE = RABBIT_CHANNEL.queue("addition", durable: true).bind(RABBIT_EXCHA
 
 class AdditionServiceImpl < Addition::Service
   def add(add_request, _call)
+    start = Time.now
     a = add_request.a
     b = add_request.b
     sum = a + b
-    OutBox.add(sum)
+    OutBox.add(sum,start)
+    duration = ((Time.now - start) * 1000).to_i
+    REQUEST_DURATION.observe(duration, labels: {method: "grpc", path: "add"})
     AddResponse.new(sum: sum)
   end
 end
@@ -40,6 +58,8 @@ end
 
 set(:bind, "0.0.0.0")
 set(:port, 3001)
+set(:protection, except: :host_authorization)
+set(:environment, :production)
 
 configure do
   set(:json_encoder, :to_json)
@@ -49,5 +69,7 @@ before do
   content_type(:json)
 end
 
-get("/") do
+get("/metrics") do
+  content_type("text/plain")
+  Prometheus::Client::Formats::Text.marshal(PROM_REGISTRY)
 end

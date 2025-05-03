@@ -1,8 +1,11 @@
-
 global:
   scrape_interval: 5s
 
 scrape_configs:
-  - job_name: 'node-server'
+  - job_name: "ruby"
     static_configs:
-      - targets: ['node-server:4000']
+      - targets: ["ruby-server:3001"]
+
+  - job_name: "node-server"
+    static_configs:
+      - targets: ["node-server:4000"]
