@@ -39,7 +39,7 @@ Thread.new do
 end
 
 set(:bind, "0.0.0.0")
-set(:port, 3000)
+set(:port, 3001)
 
 configure do
   set(:json_encoder, :to_json)

@@ -47,7 +47,7 @@ services:
     volumes:
       - ./ruby-server:/app
     ports:
-      - "3000:3000"
+      - "3001:3001"
       - "50051:50051"
 
   node-server:
@@ -67,6 +67,7 @@ services:
 
   debezium:
     image: quay.io/debezium/server:latest
+    container_name: debezium
     ports:
       - 8080:8080
     volumes:
@@ -79,6 +80,27 @@ services:
         condition: service_healthy
       db:
         condition: service_started
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
 
 volumes:
   postgres_data:
+  grafana_data:

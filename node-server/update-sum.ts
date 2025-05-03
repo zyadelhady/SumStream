@@ -33,3 +33,9 @@ export async function updateSum(addition: number): Promise<number> {
     return newSum;
   });
 }
+
+export async function getCurrentSum(): Promise<number> {
+  return await mutex.runExclusive(async () => {
+    return await readSum();
+  });
+}

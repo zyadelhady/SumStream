@@ -1,0 +1,8 @@
+
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'node-server'
+    static_configs:
+      - targets: ['node-server:4000']
