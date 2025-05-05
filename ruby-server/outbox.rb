@@ -8,7 +8,7 @@ class OutBox < ActiveRecord::Base
 
   # Add a new row to the outbox
   def self.add(msg, started_at)
-    create!(msg: msg,started_at:started_at)
+    create!(msg: msg, started_at: started_at)
   end
 
   # Get all rows from the outbox

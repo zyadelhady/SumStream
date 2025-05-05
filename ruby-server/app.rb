@@ -18,11 +18,10 @@ require_relative "outbox"
 # === Prometheus Setup ===
 PROM_REGISTRY = Prometheus::Client.registry
 
-REQUEST_DURATION = Prometheus::Client::Histogram.new(
+REQUEST_DURATION = Prometheus::Client::Summary.new(
   :grpc_request_duration_ms,
   docstring: "Duration of gRPC requests in ms",
-  labels: [:method, :path],
-  buckets: [1, 50, 100, 200, 400, 500, 800]
+  labels: [:method, :path]
 )
 
 PROM_REGISTRY.register(REQUEST_DURATION)
@@ -41,7 +40,7 @@ class AdditionServiceImpl < Addition::Service
     a = add_request.a
     b = add_request.b
     sum = a + b
-    OutBox.add(sum,start)
+    OutBox.add(sum, start)
     duration = ((Time.now - start) * 1000).to_i
     REQUEST_DURATION.observe(duration, labels: {method: "grpc", path: "add"})
     AddResponse.new(sum: sum)

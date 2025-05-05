@@ -17,6 +17,4 @@ COPY . .
 # Compile .proto files
 RUN grpc_tools_ruby_protoc -I ./proto --ruby_out=../ --grpc_out=../ addition.proto
 
-CMD ["rake", "db:migrate"]
-
-CMD ["rerun", "--", "ruby", "app.rb"]
+# CMD ["rerun", "--", "ruby", "app.rb"]
