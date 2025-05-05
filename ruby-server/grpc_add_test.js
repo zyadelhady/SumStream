@@ -6,9 +6,8 @@ client.load(["./proto"], "addition.proto"); // Adjust the path and filename as n
 
 export const options = {
   stages: [
-    { duration: "30s", target: 50 }, // Ramp-up to 2 VUs
-    { duration: "3m", target: 400 }, // Ramp-up to 10 VUs
-    { duration: "57m", target: 600 }, // Ramp-down to 50 VUs
+    { duration: "10m", target: 10000 }, // Ramp-up to 10 VUs
+    { duration: "10m", target: 15000 }, // Ramp-down to 50 VUs
     { duration: "30s", target: 0 }, // Ramp-down to 0 VUs
   ],
 };
