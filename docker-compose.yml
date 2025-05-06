@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 
 services:
   rabbitmq:
@@ -46,6 +46,9 @@ services:
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
     volumes:
       - ./ruby-server:/app
+    post_start:
+      - command: rake "db:migrate"
+        user: root
     ports:
       - "3001:3001"
       - "50051:50051"

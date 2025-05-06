@@ -27,5 +27,5 @@ export default () => {
   });
 
   client.close();
-  sleep(2);
+  sleep(7);
 };
