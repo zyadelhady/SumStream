@@ -70,6 +70,14 @@ Health checks are configured for RabbitMQ to ensure it is ready before other ser
 ### Load Testing with K6
 - **Node.js Load Testing**: Used K6 to simulate a load up to 15000 users hitting the `GET /sum` endpoint.
 - **Ruby Server Load Testing**: Used K6 to simulate load for gRPC calls to the Add endpoint, ramping up users to 15000
+  ```bash
+  cd ruby-server
+  k6 run grpc_add_test.js
+  ```
+  ```bash
+  cd node-server
+  k6 run rest_sum_test.js
+  ```
 
 ## Key Observations and Performance Metrics
 - **Queue Time**: Measured the time between receiving a message in the RabbitMQ queue and processing it.
