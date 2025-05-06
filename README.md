@@ -21,6 +21,9 @@ This project is a distributed system built using multiple services, including a 
 - **Prometheus + Grafana**: Integrated Prometheus for monitoring latency, request durations, and system health, and Grafana for visualizing metrics in real-time.
 - **Docker Compose**: Used Docker Compose to run all services locally and manage dependencies between them.
 
+## Dashboard
+
+![dashboard](https://github.com/user-attachments/assets/4b4ad729-520f-4f3a-b00c-35a544e466d9)
 
 ## Technologies Used
 - **Ruby** for implementing the gRPC service.
@@ -58,6 +61,7 @@ Health checks are configured for RabbitMQ to ensure it is ready before other ser
 
 3. **Verify the Services**:
     - RabbitMQ will be available at [http://localhost:15672](http://localhost:15672).
+    - grpc server will be available at [http://localhost:50051](http://localhost:50051).
     - The Ruby server will be accessible at [http://localhost:3001](http://localhost:3001).
     - The Node.js server will be accessible at [http://localhost:4000](http://localhost:4000).
     - Prometheus will be available at [http://localhost:9090](http://localhost:9090).
