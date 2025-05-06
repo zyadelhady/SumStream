@@ -3,6 +3,10 @@
 ## Overview
 This project is a distributed system built using multiple services, including a Ruby server, Node.js server, RabbitMQ, PostgreSQL, Debezium, Prometheus, and Grafana. The system performs reliable asynchronous processing using RabbitMQ and exposes a REST API and gRPC services. The project is designed to process a series of requests related to "addition" and maintain the sum, integrating monitoring and observability tools like Prometheus and Grafana.
 
+## Architecture 
+![image](https://github.com/user-attachments/assets/e6153e9f-cffa-4ef5-b7da-09ce1513778d)
+
+
 ## Services Overview
 - **RabbitMQ**: Messaging broker that handles asynchronous communication between services.
 - **PostgreSQL (db)**: Database for storing application data.
